@@ -32,3 +32,25 @@ public class AdsService {
     private final AdsMapper adsMapper;
     private final CommentMapper commentMapper;
 
+    public Collection<Ads> getAllAds() {
+        log.info("Used method is - getAllAds");
+        return adsRepository.findAll();
+
+    }
+
+    public Ads addAds(CreateAdsDTO createAdsDto, MultipartFile adsImage, String Email) throws Exception {
+        log.info("Used method is - addAds");
+        User user = userRepository.findByEmail(Email).orElseThrow(() -> new Exception("User no found"));
+        Ads ads = adsMapper.toEntity(createAdsDto);
+        ads.setAuthor(user);
+        ads.setImage(imageService.uploadImage(adsImage));
+        return adsRepository.save(ads);
+    }
+
+    public FullAdsDTO getFullAds(long id) throws Exception {
+        log.info("Used method is - getFullAd");
+        return adsMapper.toFullAdsDto(adsRepository.findById(id).orElseThrow(() -> new Exception("Ad not found")));
+
+    }
+}
+

@@ -15,6 +15,16 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImageService {
     private final ImageRepository imageRepository;
+    public Image uploadImage(MultipartFile multipartFile) throws IOException {
 
+        log.info("Current method is - uploadImage");
+        Image image = new Image();
+        image.setData(multipartFile.getBytes());
+        image.setFileSize(multipartFile.getSize());
+        image.setMediaType(multipartFile.getContentType());
+        image.setData(multipartFile.getBytes());
+        return imageRepository.save(image);
+
+    }
 
 }

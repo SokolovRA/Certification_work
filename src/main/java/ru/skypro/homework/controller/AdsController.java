@@ -16,7 +16,6 @@ import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.wrapper.ResponseWrapper;
 
-
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -26,4 +25,23 @@ public class AdsController {
     private final AdsService adsService;
     private final AdsMapper adsMapper;
     private final ImageService imageService;
+
+    @GetMapping
+    public ResponseWrapper<AdsDTO> getAllAds() {
+        log.info("Used method is - getAllAds");
+        return ResponseWrapper.of(adsMapper.toDto(adsService.getAllAds()));
+    }
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AdsDTO> addAds(@RequestPart("image") MultipartFile multipartFile,
+                                         @RequestPart("properties") CreateAdsDTO createAdsDto) throws Exception {
+        log.info("Used method is - addAds");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(adsMapper.toDto(adsService.addAds(createAdsDto, multipartFile, authentication.getName())));
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<FullAdsDTO> getFullAdsInfo(@PathVariable int id) throws Exception {
+        log.info("Used method is - getFullAd");
+        FullAdsDTO fullAdDto = adsService.getFullAds(id);
+        return ResponseEntity.ok(fullAdDto);
+    }
 }

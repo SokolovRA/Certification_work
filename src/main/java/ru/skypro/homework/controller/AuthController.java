@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.homework.dto.LoginReq;
-import ru.skypro.homework.dto.RegisterReq;
+import ru.skypro.homework.dto.LoginReqDTO;
+import ru.skypro.homework.dto.RegisterDTO;
 import ru.skypro.homework.enums.Role;
-import ru.skypro.homework.service.AuthService;
+import ru.skypro.homework.interfaces.UserAuthInterface;
 
 import static ru.skypro.homework.enums.Role.USER;
 
@@ -20,22 +20,19 @@ import static ru.skypro.homework.enums.Role.USER;
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-
-    private final AuthService authService;
-
+    private final UserAuthInterface authService;
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginReq req) {
-        if (authService.login(req.getUsername(), req.getPassword())) {
+    public ResponseEntity<?> login(@RequestBody LoginReqDTO req) {
+        if (authService.login(req.getUserName(), req.getPassword())) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
-
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterReq req) {
-        Role role = req.getRole() == null ? USER : req.getRole();
-        if (authService.register(req, role)) {
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
+        Role role = registerDTO.getRole() == null ? USER : registerDTO.getRole();
+        if (authService.register(registerDTO, role)) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

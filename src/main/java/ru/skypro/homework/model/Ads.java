@@ -2,7 +2,6 @@ package ru.skypro.homework.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,15 +10,22 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "ads")
 public class Ads {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "description")
     private String description;
+    @Column(name = "price")
     private Long price;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @JoinColumn(name = "author_id")
+    private User author;
     @OneToOne(fetch = FetchType.LAZY)
-    private ImageAds imageAds;
+    @JoinColumn(name = "image_id")
+    private Image image;
 }

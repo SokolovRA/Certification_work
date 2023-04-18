@@ -1,9 +1,11 @@
 package ru.skypro.homework.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class LoginReq {
+@NoArgsConstructor
+public class LoginReqDTO {
     private String password;
     private String userName;
 

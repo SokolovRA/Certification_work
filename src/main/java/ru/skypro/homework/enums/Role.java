@@ -1,5 +1,9 @@
 package ru.skypro.homework.enums;
 
-public enum Role {
-    USER, ADMIN
-}
+
+public enum Role  {
+    USER, ADMIN;
+
+ }
+
+

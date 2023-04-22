@@ -1,9 +1,12 @@
 package ru.skypro.homework.service;
 
+import liquibase.repackaged.org.apache.commons.lang3.tuple.Pair;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.repository.ImageRepository;
 
@@ -15,16 +18,22 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class ImageService {
     private final ImageRepository imageRepository;
-    public Image uploadImage(MultipartFile multipartFile) throws IOException {
-
-        log.info("Current method is - uploadImage");
-        Image image = new Image();
-        image.setData(multipartFile.getBytes());
-        image.setFileSize(multipartFile.getSize());
-        image.setMediaType(multipartFile.getContentType());
-        image.setData(multipartFile.getBytes());
-        return imageRepository.save(image);
-
+    public void remove(Image image) {
+        imageRepository.delete(image);
+        log.info("Image removed successfully");
     }
-
+    public Image uploadImage(MultipartFile imageFile) throws IOException {
+        Image image = new Image();
+        image.setMediaType(imageFile.getContentType());
+        image.setFileSize(imageFile.getSize());
+        image.setData(imageFile.getBytes());
+        return imageRepository.save(image);
+    }
+    public Image getImageById(Integer id) {
+        return imageRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+    public Pair<String, byte[]> getImage(Integer id) {
+        Image image = getImageById(id);
+        return Pair.of(image.getMediaType(), image.getData());
+    }
 }

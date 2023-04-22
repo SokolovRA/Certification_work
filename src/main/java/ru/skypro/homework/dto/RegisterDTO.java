@@ -1,13 +1,11 @@
 package ru.skypro.homework.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import ru.skypro.homework.enums.Role;
 @Data
-@NoArgsConstructor
 public class RegisterDTO {
 
-        private String userName;
+        private String username;
 
         private String password;
 

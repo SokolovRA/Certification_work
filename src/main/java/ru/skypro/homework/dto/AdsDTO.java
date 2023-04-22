@@ -1,21 +1,18 @@
 package ru.skypro.homework.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AdsDTO {
-    private Long author;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer author;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String image;
-    private Long pk;
-    private Long price;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Integer pk;
+    private Integer price;
     private String title;
-    @JsonIgnore
-    private String description;
 
     }
 

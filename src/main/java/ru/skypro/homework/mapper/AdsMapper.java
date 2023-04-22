@@ -8,10 +8,11 @@ import ru.skypro.homework.dto.CreateAdsDTO;
 import ru.skypro.homework.dto.FullAdsDTO;
 import ru.skypro.homework.model.Ads;
 import ru.skypro.homework.model.Image;
-import ru.skypro.homework.service.ImageService;
 
-@Mapper(componentModel = "spring", uses = {CommentMapper.class, ImageService.class})
-public interface AdsMapper extends MapperScheme<AdsDTO, Ads> {
+@Mapper(componentModel = "spring")
+public interface AdsMapper {
+
+
 
     @Mapping(target = "id", source = "pk")
     @Mapping(target = "author.id", source = "author")
@@ -20,8 +21,8 @@ public interface AdsMapper extends MapperScheme<AdsDTO, Ads> {
 
     @Mapping(target = "pk", source = "id")
     @Mapping(target = "author", source = "author.id")
-    @Mapping(target = "image", source = "entity.image", qualifiedByName = "imageMapping")
-    AdsDTO toDto(Ads entity);
+    @Mapping(target = "image", source = "image", qualifiedByName = "imageMapping")
+    AdsDTO toDto(Ads ads);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "author", ignore = true)
@@ -31,10 +32,10 @@ public interface AdsMapper extends MapperScheme<AdsDTO, Ads> {
     @Mapping(target = "authorFirstName", source = "author.firstName")
     @Mapping(target = "authorLastName", source = "author.lastName")
     @Mapping(target = "phone", source = "author.phone")
-    @Mapping(target = "email", source = "author.email")
-    @Mapping(target = "image", source = "entity.image", qualifiedByName = "imageMapping")
+    @Mapping(target = "email", source = "author.username")
+    @Mapping(target = "image", source = "image", qualifiedByName = "imageMapping")
     @Mapping(target = "pk", source = "id")
-    FullAdsDTO toFullAdsDto(Ads entity);
+    FullAdsDTO toFullAdsDto(Ads ads);
 
     @Named("imageMapping")
     default String imageMapping(Image image) {

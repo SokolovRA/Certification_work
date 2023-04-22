@@ -3,6 +3,10 @@ package ru.skypro.homework.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -16,11 +20,14 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
-
+    private Integer id;
+    @NotNull
     @Column(name = "created_at")
-    private String createdAt;
-    @Column(name = "text_comment")
+    private Instant createdAt;
+    @NotNull
+    @NotEmpty
+    @NotBlank
+    @Column(name = "text")
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)

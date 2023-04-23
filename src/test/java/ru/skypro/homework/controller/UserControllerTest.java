@@ -51,7 +51,7 @@ public class UserControllerTest {
     private Authentication auth;
     private final User user = new User();
     private final MockPart imageFile
-            = new MockPart("image", "avatar", "avatar".getBytes());
+            = new MockPart("image", "image", "avatar".getBytes());
     private final Image image = new Image();
 
     @BeforeEach
@@ -99,8 +99,8 @@ public class UserControllerTest {
 
     @Test
     public void testUpdateUserReturnsUpdatedUser() throws Exception {
-        String newFirstName = "Resu";
-        String newLastName = "Tset";
+        String newFirstName = "Aravik";
+        String newLastName = "Texas";
         user.setFirstName(newFirstName);
         user.setLastName(newLastName);
 

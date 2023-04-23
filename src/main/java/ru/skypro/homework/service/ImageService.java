@@ -19,10 +19,12 @@ import java.io.IOException;
 public class ImageService {
     private final ImageRepository imageRepository;
     public void remove(Image image) {
+        log.info("Used method  is - remove");
         imageRepository.delete(image);
         log.info("Image removed successfully");
     }
     public Image uploadImage(MultipartFile imageFile) throws IOException {
+        log.info("Used method  is - uploadImage");
         Image image = new Image();
         image.setMediaType(imageFile.getContentType());
         image.setFileSize(imageFile.getSize());
@@ -30,9 +32,11 @@ public class ImageService {
         return imageRepository.save(image);
     }
     public Image getImageById(Integer id) {
+        log.info("Used method  is - getImageById");
         return imageRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
     public Pair<String, byte[]> getImage(Integer id) {
+        log.info("Used method  is - getImage");
         Image image = getImageById(id);
         return Pair.of(image.getMediaType(), image.getData());
     }

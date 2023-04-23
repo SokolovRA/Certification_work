@@ -1,6 +1,7 @@
 package ru.skypro.homework.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +13,7 @@ import ru.skypro.homework.dto.UserDTO;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
-
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -24,10 +25,12 @@ public class UserService {
 
 
     public UserDTO getAuthorizedUsers(Authentication authentication) {
+        log.info("Used method is - getAuthorizedUsers");
         return userMapper.toDto(getUserByUsername(authentication.getName()));
     }
 
     public UserDTO updateUser(UserDTO userDto, Authentication authentication) throws Exception {
+        log.info("Used method is - updateUser");
         User user = userRepository.findByUsernameIgnoreCase(authentication.getName()).orElseThrow(() -> new Exception("User not found"));
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -37,7 +40,8 @@ public class UserService {
     }
 
     public void updateUserImage(MultipartFile avatar,
-                                  Authentication authentication) throws Exception {
+                                Authentication authentication) throws Exception {
+        log.info("Used method is - updateUserImage");
         User user = userRepository.findByUsernameIgnoreCase(authentication.getName()).orElseThrow(() -> new Exception("User not found"));
         if (user.getImage() != null) {
             imageService.remove(user.getImage());
@@ -45,7 +49,9 @@ public class UserService {
         user.setImage(imageService.uploadImage(avatar));
         userRepository.save(user);
     }
+
     public void updatePassword(PasswordDTO newPassword, Authentication authentication) {
+        log.info("Used method is - updatePassword");
         User user = getUserByUsername(authentication.getName());
         if (!passwordEncoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
             throw new UsernameNotFoundException("User not found is email");
@@ -53,7 +59,9 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(newPassword.getNewPassword()));
         userRepository.save(user);
     }
+
     public User getUserByUsername(String userName) {
+        log.info("Used method is - getUserByUsername");
         return userRepository.findByUsernameIgnoreCase(userName).orElseThrow(() ->
                 new UsernameNotFoundException("User not found is email"));
     }

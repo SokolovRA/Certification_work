@@ -66,6 +66,7 @@ public class AdsService {
         log.info("Used method is - removeAdsById");
         Ads ads = getAdsById(adsId);
         adsRepository.delete(ads);
+        log.info("Ads removed successfully");
     }
     public AdsDTO updateAds(Integer id, CreateAdsDTO createAdsDto) {
         log.info("Used method is - updateAds");
@@ -77,7 +78,7 @@ public class AdsService {
         return adsMapper.toDto(ads);
     }
     public List<AdsDTO> getAdsAuthorizedUsers(Authentication authentication) {
-        log.info("Used method  is - getAdsMe");
+        log.info("Used method  is - getAdsAuthorizedUsers");
         return adsRepository.findAllByAuthor_Username(authentication.getName())
                 .stream()
                 .map(adsMapper::toDto)

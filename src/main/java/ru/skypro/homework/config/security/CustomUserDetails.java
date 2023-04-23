@@ -1,4 +1,4 @@
-package ru.skypro.homework.security;
+package ru.skypro.homework.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

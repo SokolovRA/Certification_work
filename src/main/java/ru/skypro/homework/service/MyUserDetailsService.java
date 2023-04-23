@@ -1,4 +1,4 @@
-package ru.skypro.homework.security;
+package ru.skypro.homework.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.skypro.homework.config.security.CustomUserDetails;
 import ru.skypro.homework.dto.RegisterDTO;
 import ru.skypro.homework.enums.Role;
 import ru.skypro.homework.model.User;

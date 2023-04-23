@@ -1,6 +1,7 @@
 package ru.skypro.homework.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.AdsCommentDTO;
@@ -15,7 +16,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -25,6 +26,7 @@ public class CommentService {
     private final AdsRepository adsRepository;
 
     public AdsCommentDTO addAdsComment(Integer id, AdsCommentDTO adsCommentDTO, Authentication authentication) throws Exception {
+        log.info("Used method  is - addAdsComment");
         User user = userRepository.findByUsernameIgnoreCase(authentication.getName()).orElseThrow(() -> new Exception("User not found"));
         Comment comment = commentMapper.toEntity(adsCommentDTO);
         comment.setAuthor(user);
@@ -34,6 +36,7 @@ public class CommentService {
         return commentMapper.toDto(comment);
     }
     public List<AdsCommentDTO> getComments(Integer id) {
+        log.info("Used method  is - getComments");
         return commentRepository.findAllByAdsId(id)
                 .stream()
                 .map(commentMapper::toDto)
@@ -41,11 +44,14 @@ public class CommentService {
     }
 
     public void deleteAdsComment(Integer adId, Integer commentId) throws Exception {
+        log.info("Used method  is - deleteAdsComment");
         Comment comment = getAdsComment( commentId,adId);
         commentRepository.delete(comment);
+                log.info("Comment removed successfully");
     }
 
     public AdsCommentDTO updateComments( Integer adId,Integer commentId, AdsCommentDTO adsCommentDTO) throws Exception {
+        log.info("Used method  is - updateComments");
         Comment comment = getAdsComment(commentId,adId);
         comment.setText(adsCommentDTO.getText());
         commentRepository.save(comment);

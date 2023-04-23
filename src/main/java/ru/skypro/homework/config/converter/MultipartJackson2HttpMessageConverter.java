@@ -1,4 +1,4 @@
-package ru.skypro.homework.config;
+package ru.skypro.homework.config.converter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;

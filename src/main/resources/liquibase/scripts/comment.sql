@@ -6,7 +6,7 @@ create table comment
 (
     id           SERIAL PRIMARY KEY,
     created_at   TIMESTAMP NOT NULL,
-    text         varchar(255),
+    text         varchar(255) NOT NULL,
     author_id    integer references users (id),
     ads_id       integer references ads (id)
 );

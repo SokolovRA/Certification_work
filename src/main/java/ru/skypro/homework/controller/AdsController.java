@@ -144,7 +144,6 @@ public class AdsController {
         return ResponseEntity.ok().build();
 
     }
-    @Operation(hidden = true)
     @GetMapping(value = "/image/{id}")
     public ResponseEntity<byte[]> getAdsImage(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(imageService.getImageById(id).getData());

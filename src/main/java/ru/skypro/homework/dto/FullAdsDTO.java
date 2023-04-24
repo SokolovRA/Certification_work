@@ -8,7 +8,7 @@ public class FullAdsDTO {
     private String authorLastName;
     private String authorFirstName;
     private String phone;
-    private int price;
+    private Integer price;
     private String description;
     private Integer pk;
     private String title;

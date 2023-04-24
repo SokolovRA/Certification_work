@@ -22,8 +22,6 @@ public class WebSecurityConfig {
           "/ads",
           "/ads/image/**"
   };
-
-
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.csrf()
@@ -35,15 +33,14 @@ public class WebSecurityConfig {
                                     .permitAll()
                                     .mvcMatchers("/ads/**", "/users/**")
                                     .authenticated()
-                                    .anyRequest()
-                                    .authenticated()
+//                                    .anyRequest()
+//                                    .authenticated()
             )
             .cors()
             .and()
             .httpBasic(withDefaults());
     return http.build();
   }
-
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();

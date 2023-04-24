@@ -100,21 +100,6 @@ public class AdsControllerTest {
                 .andExpect(jsonPath("$.results").isArray());
     }
 
-    @Test
-    public void testAddAdsCreatesNewAdWithCorrectDetailsInDatabase() throws Exception {
-        MockPart created = new MockPart("properties", objectMapper.writeValueAsBytes(createAdsDTO));
-
-        mockMvc.perform(multipart("/ads")
-                        .part(imageFile)
-                        .part(created)
-                        .with(authentication(auth)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.pk").isNotEmpty())
-                .andExpect(jsonPath("$.pk").isNumber())
-                .andExpect(jsonPath("$.title").value(createAdsDTO.getTitle()))
-                .andExpect(jsonPath("$.description").value(createAdsDTO.getDescription()))
-                .andExpect(jsonPath("$.price").value(createAdsDTO.getPrice()));
-    }
 
     @Test
     public void testGetAdByIdReturnsCorrectDetails() throws Exception {

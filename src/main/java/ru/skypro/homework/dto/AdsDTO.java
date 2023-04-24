@@ -13,8 +13,8 @@ public class AdsDTO {
     private Integer pk;
     private Integer price;
     private String title;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String description;
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+//    private String description;
     }
 
 

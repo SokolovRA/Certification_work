@@ -12,16 +12,10 @@ import ru.skypro.homework.model.Image;
 @Mapper(componentModel = "spring")
 public interface AdsMapper {
 
-
-
-    @Mapping(target = "id", source = "pk")
-    @Mapping(target = "author.id", source = "author")
-    @Mapping(target = "image", ignore = true)
-    Ads toEntity(AdsDTO dto);
-
     @Mapping(target = "pk", source = "id")
     @Mapping(target = "author", source = "author.id")
     @Mapping(target = "image", source = "image", qualifiedByName = "imageMapping")
+
     AdsDTO toDto(Ads ads);
 
     @Mapping(target = "id", ignore = true)

@@ -52,21 +52,21 @@ public class AdsServiceTest {
 
 
 
-    @Test
-    public void testGetAllAds() {
-        List<Ads> adsList = new ArrayList<>();
-        Ads ads = new Ads();
-        adsList.add(ads);
-        when(adsRepository.findAll()).thenReturn(adsList);
-        AdsDTO adsDto = new AdsDTO();
-        when(adsMapper.toDto(ads)).thenReturn(adsDto);
+        @Test
+        public void testGetAllAds() {
+            List<Ads> adsList = new ArrayList<>();
+            Ads ads = new Ads();
+            adsList.add(ads);
+            when(adsRepository.findAll()).thenReturn(adsList);
+            AdsDTO adsDto = new AdsDTO();
+            when(adsMapper.toDto(ads)).thenReturn(adsDto);
 
 
-        List<AdsDTO> result = adsService.getAllAds();
+            List<AdsDTO> result = adsService.getAllAds();
 
-        assertEquals(1, result.size());
-        assertEquals(adsDto, result.get(0));
-    }
+            assertEquals(1, result.size());
+            assertEquals(adsDto, result.get(0));
+        }
 
     @Test
     public void testAddAds() throws Exception {

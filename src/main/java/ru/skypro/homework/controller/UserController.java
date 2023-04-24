@@ -40,7 +40,7 @@ public class UserController {
             }
     )
     @GetMapping("/me")
-    public ResponseEntity<UserDTO> getAuthorizedUsers(Authentication authentication) {
+    public ResponseEntity<UserDTO> getAuthorizedUsers(Authentication authentication) throws Exception {
         return ResponseEntity.ok(userService.getAuthorizedUsers(authentication));
     }
     @Operation(
@@ -92,8 +92,7 @@ public class UserController {
         userService.updateUserImage(avatarFile, authentication);
         return ResponseEntity.ok().build();
     }
-    @Operation(hidden = true)
-    @GetMapping(value = "/image/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping(value = "/me/image/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
         Pair<String, byte[]> pair = imageService.getImage(id);
         return ResponseEntity.ok()

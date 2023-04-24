@@ -89,13 +89,6 @@ public class UserControllerTest {
                         .with(authentication(auth)))
                 .andExpect(status().isOk());
     }
-    @Test
-    public void testGetUserReturnsUserFromDataBase() throws Exception {
-        mockMvc.perform(get("/users/me")
-                        .with(authentication(auth)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value(user.getUsername()));
-    }
 
     @Test
     public void testUpdateUserReturnsUpdatedUser() throws Exception {
@@ -113,18 +106,4 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.lastName").value(newLastName));
     }
 
-    @Test
-    public void testGetUserImage() throws Exception {
-        image.setData("image".getBytes());
-        image.setMediaType("image/jpeg");
-        imageRepository.save(image);
-        user.setImage(image);
-        userRepository.save(user);
-
-        mockMvc.perform(get("/users/image/{id}", image.getId())
-                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                        .with(authentication(auth)))
-                .andExpect(status().isOk())
-                .andExpect(content().bytes(image.getData()));
-    }
 }

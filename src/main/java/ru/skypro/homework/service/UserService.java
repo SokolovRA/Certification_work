@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.PasswordDTO;
 import ru.skypro.homework.dto.UserDTO;
-//import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
 @Slf4j
@@ -21,7 +20,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final ImageService imageService;
     private final PasswordEncoder passwordEncoder;
-//    private final UserMapper userMapper;
+
 
 
     public UserDTO getAuthorizedUsers(Authentication authentication) throws Exception {

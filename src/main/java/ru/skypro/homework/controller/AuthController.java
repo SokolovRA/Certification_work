@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,14 +40,12 @@ public class AuthController {
             }
     )
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO req) throws Exception {
+    public ResponseEntity<?> login(@RequestBody LoginDTO req)  {
         try {
-            if (!authService.login(req.getUsername(), req.getPassword())) {
-                throw new InvalidCredentialsException("Invalid username or password");
-            }
+            authService.login(req.getUsername(), req.getPassword());
             return ResponseEntity.ok().build();
-        } catch (InvalidCredentialsException ex) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 

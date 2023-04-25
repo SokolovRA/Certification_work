@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.RegisterDTO;
+import ru.skypro.homework.exception.InvalidCredentialsException;
 
 @Slf4j
 @Service
@@ -16,10 +17,10 @@ public class AuthService  {
   private final MyUserDetailsService manager;
 
   public boolean login(String userName, String password) throws Exception {
-    log.info("Used method  is - login");
+    log.info("Used method is - login");
     UserDetails userDetails = manager.loadUserByUsername(userName);
     if (!encoder.matches(password, userDetails.getPassword())) {
-      throw new Exception("Invalid username or password");
+      throw new InvalidCredentialsException("Invalid username or password");
     }
     return true;
   }

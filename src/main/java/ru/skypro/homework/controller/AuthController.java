@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import ru.skypro.homework.dto.LoginDTO;
 import ru.skypro.homework.dto.RegisterDTO;
+import ru.skypro.homework.exception.InvalidCredentialsException;
 import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.MyUserDetailsService;
 
@@ -39,10 +40,14 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO req) throws Exception {
-        if (!authService.login(req.getUsername(), req.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+        try {
+            if (!authService.login(req.getUsername(), req.getPassword())) {
+                throw new InvalidCredentialsException("Invalid username or password");
+            }
+            return ResponseEntity.ok().build();
+        } catch (InvalidCredentialsException ex) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
         }
-        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Регистрация пользователя", tags = "Регистрация",

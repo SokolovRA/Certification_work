@@ -1,6 +1,5 @@
 package ru.skypro.homework.service;
 
-import liquibase.repackaged.org.apache.commons.lang3.tuple.Pair;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,9 +34,5 @@ public class ImageService {
         log.info("Used method  is - getImageById");
         return imageRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-    public Pair<String, byte[]> getImage(Integer id) {
-        log.info("Used method  is - getImage");
-        Image image = getImageById(id);
-        return Pair.of(image.getMediaType(), image.getData());
-    }
+
 }

@@ -1,23 +1,18 @@
 package ru.skypro.homework.service;
 
-import liquibase.repackaged.org.apache.commons.lang3.tuple.Pair;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.repository.ImageRepository;
-import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -63,20 +58,6 @@ public class ImageServiceTest {
         when(imageRepository.findById(1)).thenReturn(Optional.of(testImage));
         Image returnedImage = imageService.getImageById(1);
         assertEquals(testImage, returnedImage);
-    }
-    @Test
-    void testGetImage() {
-
-        ImageRepository imageRepository = mock(ImageRepository.class);
-        ImageService imageService = new ImageService(imageRepository);
-        Image testImage = new Image();
-        testImage.setId(1);
-        testImage.setMediaType("image/jpeg");
-        testImage.setData("test image data".getBytes());
-        when(imageRepository.findById(1)).thenReturn(Optional.of(testImage));
-        Pair<String, byte[]> imageData = imageService.getImage(1);
-        assertEquals(testImage.getMediaType(), imageData.getLeft());
-        assertArrayEquals(testImage.getData(), imageData.getRight());
     }
 }
 

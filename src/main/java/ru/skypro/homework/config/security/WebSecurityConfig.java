@@ -20,7 +20,8 @@ public class WebSecurityConfig {
           "/login",
           "/register",
           "/ads",
-          "/ads/image/**"
+          "/ads/image/**",
+          "/users/me/image/**"
   };
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -33,8 +34,6 @@ public class WebSecurityConfig {
                                     .permitAll()
                                     .mvcMatchers("/ads/**", "/users/**")
                                     .authenticated()
-//                                    .anyRequest()
-//                                    .authenticated()
             )
             .cors()
             .and()

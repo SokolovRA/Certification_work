@@ -63,6 +63,9 @@ public class CommentService {
     public Comment getAdsComment(Integer commentId, Integer adId) throws Exception {
         return commentRepository.findByIdAndAdsId(commentId, adId).orElseThrow(Exception::new);
     }
+    public Comment getComment(Integer id) throws Exception {
+        log.info("Used method  is - getComments");
+        return commentRepository.findById(id).orElseThrow(Exception::new);     }
 }
 
 

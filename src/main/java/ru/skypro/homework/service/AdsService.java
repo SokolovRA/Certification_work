@@ -53,7 +53,7 @@ public class AdsService {
     }
     public FullAdsDTO getFullAds(Integer id) throws Exception {
         log.info("Used method is - getFullAd");
-        return adsMapper.toFullAdsDto(adsRepository.findById(id).orElseThrow(() -> new Exception("Ad not found")));
+        return adsMapper.toFullAdsDto(getAdsById(id));
 
     }
     public Ads getAdsById(Integer id) {

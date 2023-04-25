@@ -33,7 +33,8 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO req) throws Exception {
-        return ResponseEntity.ok(authService.login(req.getUsername(), req.getPassword()));
+        authService.login(req.getUsername(), req.getPassword());
+        return ResponseEntity.ok().build();
     }
     @Operation(summary = "Регистрация пользователя", tags = "Регистрация",
             responses = {

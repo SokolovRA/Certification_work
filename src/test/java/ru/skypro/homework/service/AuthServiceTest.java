@@ -11,7 +11,7 @@ import ru.skypro.homework.model.User;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -28,7 +28,7 @@ public class AuthServiceTest {
     private AuthService authService;
 
     @Test
-    public void testLogin() {
+    public void testLogin() throws Exception {
         String userName = "testUser";
         String password = "testPassword";
         String encodedPassword = "encodedPassword";
@@ -52,6 +52,18 @@ public class AuthServiceTest {
         assertTrue(result);
         verify(manager, times(1)).loadUserByUsername(userName);
         verify(encoder, times(1)).matches(password, encodedPassword);
+
+        // Test for invalid password
+        String invalidPassword = "invalidPassword";
+        when(encoder.matches(invalidPassword, encodedPassword)).thenReturn(false);
+
+        Exception exception = assertThrows(Exception.class, () -> {
+            authService.login(userName, invalidPassword);
+        });
+
+        assertEquals("Invalid username or password", exception.getMessage());
+        verify(manager, times(2)).loadUserByUsername(userName);
+        verify(encoder, times(1)).matches(invalidPassword, encodedPassword);
     }
     @Test
     public void testRegister() throws Exception {

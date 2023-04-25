@@ -5,14 +5,18 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import ru.skypro.homework.dto.LoginDTO;
 import ru.skypro.homework.dto.RegisterDTO;
 import ru.skypro.homework.service.AuthService;
+import ru.skypro.homework.service.MyUserDetailsService;
 
 
 @CrossOrigin(value = "http://localhost:3000")
@@ -20,6 +24,8 @@ import ru.skypro.homework.service.AuthService;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+
+
     @Operation(summary = "Авторизация пользователя", tags = "Авторизация",
             responses = {
                     @ApiResponse(
@@ -33,9 +39,12 @@ public class AuthController {
     )
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO req) throws Exception {
-        authService.login(req.getUsername(), req.getPassword());
+        if (!authService.login(req.getUsername(), req.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+        }
         return ResponseEntity.ok().build();
     }
+
     @Operation(summary = "Регистрация пользователя", tags = "Регистрация",
             responses = {
                     @ApiResponse(

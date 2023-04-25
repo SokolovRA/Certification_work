@@ -57,7 +57,7 @@ public class UserController {
     )
     @PostMapping("/set_password")
     public ResponseEntity<?> changeOldPassword(@RequestBody PasswordDTO newPassword,
-                                               Authentication authentication) throws Exception {
+                                               Authentication authentication)  {
         userService.updatePassword(newPassword, authentication);
         return ResponseEntity.ok().build();
     }
@@ -93,11 +93,8 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
     @GetMapping(value = "/me/image/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") Integer id) {
-        Pair<String, byte[]> pair = imageService.getImage(id);
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(pair.getLeft()))
-                .contentLength(pair.getRight().length)
-                .body(pair.getRight());
+    public ResponseEntity<byte[]> getAdsImage(@PathVariable("id") Integer id) {
+        return ResponseEntity.ok(imageService.getImageById(id).getData());
     }
-}
+ }
+

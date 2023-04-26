@@ -91,8 +91,8 @@ public class UserController {
         userService.updateUserImage(avatarFile, authentication);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(value = "/me/image/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<byte[]> getAdsImage(@PathVariable("id") Integer id) {
+    @GetMapping(value = "/image/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<byte[]> getUserImage(@PathVariable("id") Integer id) {
         return ResponseEntity.ok(imageService.getImageById(id).getData());
     }
  }

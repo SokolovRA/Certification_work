@@ -27,7 +27,7 @@ public class UserDTO {
                         dto.setImage("");
                 }
                 else {
-               dto.setImage("/users/me/image/" + user.getImage().getId());
+               dto.setImage("/users/image/" + user.getImage().getId());
                 }
                 return dto;
         }

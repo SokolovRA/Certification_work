@@ -1,4 +1,4 @@
-package ru.skypro.homework.controller;
+package ru.skypro.homework.config.filter;
 
 
 import org.springframework.stereotype.Component;
@@ -22,3 +22,4 @@ public class BasicAuthCorsFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
+    
